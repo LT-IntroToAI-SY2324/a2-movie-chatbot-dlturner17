@@ -31,8 +31,21 @@ def match(pattern: List[str], source: List[str]) -> List[str]:
         # 1) if we reached the end of the pattern but not source
         if pind == len(pattern) and sind < len(source):
             return None 
+       
 
         # 2) if the current thing in the pattern is a %
+        elif pattern[pind] == "%":
+            pind += 1
+            if pind == len(pattern):
+                result.append(" ".join(source[sind:]))
+                return result
+            else:
+                current = sind
+                while pattern[pind] != source[sind]:
+                    sind += 1
+                    if sind == len(source):
+                        return None
+                result.append(" ".join(source[current:sind]))
         # WARNING: this condition contains the bulk of the code for the assignment
         # If you get stuck on this one, we encourage you to attempt the other conditions
         #   and come back to this one afterwards
